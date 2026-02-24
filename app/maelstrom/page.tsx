@@ -134,13 +134,13 @@ export default function MaelstromPage() {
               />
             ))}
 
-            {/* Purple glow layer behind */}
+            {/* Cyan glow layer behind */}
             {bolts.map((bolt) => (
               <path
                 key={`glow-${bolt.id}`}
                 d={bolt.path}
                 fill="none"
-                stroke="rgba(168, 85, 247, 0.8)"
+                stroke="rgba(0, 229, 255, 0.8)"
                 strokeWidth={bolt.width * 3}
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -156,7 +156,7 @@ export default function MaelstromPage() {
 
           {/* Main title */}
           <h1 className="animate-maelstrom-title font-display text-5xl sm:text-6xl md:text-8xl font-bold relative">
-            <span className="bg-gradient-to-r from-chuyan-violet via-chuyan-purple to-chuyan-glow bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-chuyan-teal via-chuyan-cyan to-chuyan-glow bg-clip-text text-transparent">
               MAELSTROM
             </span>
           </h1>
@@ -175,11 +175,11 @@ export default function MaelstromPage() {
           </p>
 
           {/* Divider */}
-          <div className="w-24 h-px bg-gradient-to-r from-transparent via-chuyan-purple to-transparent mx-auto" />
+          <div className="w-24 h-px bg-gradient-to-r from-transparent via-chuyan-cyan to-transparent mx-auto" />
 
           {/* Feature cards */}
           <div className="space-y-6 text-left">
-            <div className="p-6 rounded-lg border border-chuyan-purple/20 bg-chuyan-navy/30 backdrop-blur-sm">
+            <div className="p-6 rounded-lg border border-chuyan-cyan/20 bg-chuyan-navy/30 backdrop-blur-sm">
               <h3 className="font-display text-lg text-chuyan-glow mb-3">Persistent Memory</h3>
               <p className="text-chuyan-silver text-sm leading-relaxed">
                 Today&apos;s LLMs and code-assist LLMs are a crude approximation of what is possible.
@@ -192,7 +192,7 @@ export default function MaelstromPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-lg border border-chuyan-purple/20 bg-chuyan-navy/30 backdrop-blur-sm">
+            <div className="p-6 rounded-lg border border-chuyan-cyan/20 bg-chuyan-navy/30 backdrop-blur-sm">
               <h3 className="font-display text-lg text-chuyan-glow mb-3">World-State Awareness</h3>
               <p className="text-chuyan-silver text-sm leading-relaxed">
                 An agent without state is a brain in a jar. Maelstrom maintains a continuously
@@ -202,7 +202,7 @@ export default function MaelstromPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-lg border border-chuyan-purple/20 bg-chuyan-navy/30 backdrop-blur-sm">
+            <div className="p-6 rounded-lg border border-chuyan-cyan/20 bg-chuyan-navy/30 backdrop-blur-sm">
               <h3 className="font-display text-lg text-chuyan-glow mb-3">Autonomous Evolution</h3>
               <p className="text-chuyan-silver text-sm leading-relaxed">
                 With persistent state comes the capacity to grow. Agents powered by Maelstrom
@@ -217,7 +217,7 @@ export default function MaelstromPage() {
           <div className="text-center pt-8">
             <Link
               href="/"
-              className="btn-glow inline-block px-8 py-3 rounded-lg bg-chuyan-purple/20 border border-chuyan-purple/40 text-chuyan-glow text-sm uppercase tracking-widest hover:bg-chuyan-purple/30 hover:border-chuyan-glow/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)] transition-all duration-300"
+              className="btn-glow inline-block px-8 py-3 rounded-lg bg-chuyan-cyan/20 border border-chuyan-cyan/40 text-chuyan-glow text-sm uppercase tracking-widest hover:bg-chuyan-cyan/30 hover:border-chuyan-glow/50 hover:shadow-[0_0_20px_rgba(0,229,255,0.2)] transition-all duration-300"
             >
               Return to Chuyan
             </Link>

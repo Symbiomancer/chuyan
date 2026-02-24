@@ -8,7 +8,7 @@ export default function AnimatedBackground() {
     return x - Math.floor(x)
   }
 
-  const { stars, connections, emberGroups } = useMemo(() => {
+  const { stars, connections } = useMemo(() => {
     // Generate stars avoiding center
     const starList = Array.from({ length: 100 }, (_, i) => {
       let x = seededRandom(i + 1) * 100
@@ -33,7 +33,7 @@ export default function AnimatedBackground() {
     })
 
     // Create connections between nearby stars
-    const connectionList: { from: typeof starList[0]; to: typeof starList[0]; delay: number; duration: number; id: number }[] = []
+    const connectionList: { from: typeof starList[0]; to: typeof starList[0]; delay: number; duration: number }[] = []
     const maxDistance = 20
     const maxConnectionsPerStar = 2
     const connectionCount: Record<number, number> = {}
@@ -56,7 +56,6 @@ export default function AnimatedBackground() {
             to: starList[j],
             delay: seededRandom(i + j + 500) * 8,
             duration: 3 + seededRandom(i + j + 600) * 4,
-            id: connectionList.length,
           })
           connectionCount[i]++
           connectionCount[j]++
@@ -64,25 +63,7 @@ export default function AnimatedBackground() {
       }
     }
 
-    // Assign ~40% of connections to ember groups (6 groups with staggered delays)
-    const numGroups = 6
-    const emberGroupList: { connections: typeof connectionList; nodeIds: Set<number>; delay: number }[] = []
-
-    for (let g = 0; g < numGroups; g++) {
-      const groupConns = connectionList.filter((_, ci) => {
-        const v = seededRandom(ci + g * 1000 + 555)
-        return v > 0.7 && Math.floor(seededRandom(ci + 800) * numGroups) === g
-      })
-      const nodeIds = new Set<number>()
-      groupConns.forEach(c => { nodeIds.add(c.from.id); nodeIds.add(c.to.id) })
-      emberGroupList.push({
-        connections: groupConns,
-        nodeIds,
-        delay: g * 2,
-      })
-    }
-
-    return { stars: starList, connections: connectionList, emberGroups: emberGroupList }
+    return { stars: starList, connections: connectionList }
   }, [])
 
   return (
@@ -99,11 +80,11 @@ export default function AnimatedBackground() {
               x2="100%"
               y2="0%"
             >
-              <stop offset="0%" stopColor="rgba(139, 92, 246, 0)" />
-              <stop offset="45%" stopColor="rgba(139, 92, 246, 0)" />
-              <stop offset="50%" stopColor="rgba(139, 92, 246, 0.8)" />
-              <stop offset="55%" stopColor="rgba(139, 92, 246, 0)" />
-              <stop offset="100%" stopColor="rgba(139, 92, 246, 0)" />
+              <stop offset="0%" stopColor="rgba(6, 182, 212, 0)" />
+              <stop offset="45%" stopColor="rgba(6, 182, 212, 0)" />
+              <stop offset="50%" stopColor="rgba(34, 211, 238, 0.8)" />
+              <stop offset="55%" stopColor="rgba(6, 182, 212, 0)" />
+              <stop offset="100%" stopColor="rgba(6, 182, 212, 0)" />
             </linearGradient>
           ))}
         </defs>
@@ -116,7 +97,7 @@ export default function AnimatedBackground() {
             y1={`${conn.from.y}%`}
             x2={`${conn.to.x}%`}
             y2={`${conn.to.y}%`}
-            stroke="rgba(139, 92, 246, 0.15)"
+            stroke="rgba(6, 182, 212, 0.15)"
             strokeWidth="1"
           />
         ))}
@@ -138,23 +119,6 @@ export default function AnimatedBackground() {
             }}
           />
         ))}
-
-        {/* Ember overlays on connections — orange/red color cycle */}
-        {emberGroups.map((group, gi) =>
-          group.connections.map((conn, ci) => (
-            <line
-              key={`ember-line-${gi}-${ci}`}
-              x1={`${conn.from.x}%`}
-              y1={`${conn.from.y}%`}
-              x2={`${conn.to.x}%`}
-              y2={`${conn.to.y}%`}
-              stroke="rgba(255, 110, 30, 0.7)"
-              strokeWidth="1.5"
-              className="animate-net-ember"
-              style={{ animationDelay: `${group.delay}s` }}
-            />
-          ))
-        )}
       </svg>
 
       {/* Stars */}
@@ -167,34 +131,13 @@ export default function AnimatedBackground() {
             top: `${star.y}%`,
             width: `${star.size}px`,
             height: `${star.size}px`,
-            backgroundColor: '#ffffff',
-            boxShadow: star.size > 2 ? `0 0 ${star.size * 2}px rgba(255,255,255,0.5)` : 'none',
+            backgroundColor: 'rgba(34, 211, 238, 0.8)',
+            boxShadow: star.size > 2 ? `0 0 ${star.size * 2}px rgba(0, 229, 255, 0.5)` : 'none',
             animationDelay: `${star.delay}s`,
             animationDuration: `${star.duration}s`,
           }}
         />
       ))}
-
-      {/* Ember overlays on nodes — orange/red color cycle */}
-      {emberGroups.map((group, gi) =>
-        stars.filter(s => group.nodeIds.has(s.id)).map((star) => (
-          <div
-            key={`ember-node-${gi}-${star.id}`}
-            className="absolute rounded-full animate-net-ember"
-            style={{
-              left: `${star.x}%`,
-              top: `${star.y}%`,
-              width: `${star.size + 2}px`,
-              height: `${star.size + 2}px`,
-              marginLeft: '-1px',
-              marginTop: '-1px',
-              backgroundColor: 'rgba(255, 120, 30, 0.9)',
-              boxShadow: `0 0 ${star.size * 3}px rgba(255, 80, 20, 0.6)`,
-              animationDelay: `${group.delay}s`,
-            }}
-          />
-        ))
-      )}
     </div>
   )
 }

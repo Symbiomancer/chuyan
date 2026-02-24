@@ -60,16 +60,16 @@ export default function EmailSignup() {
             placeholder="Enter your email"
             disabled={status === 'loading' || status === 'success'}
             className="flex-1 px-5 py-3.5 rounded-lg bg-chuyan-gunmetal/50 border border-chuyan-silver/30
-                       text-zinc-100 placeholder-zinc-500 focus:border-chuyan-purple/60
+                       text-zinc-100 placeholder-zinc-500 focus:border-chuyan-cyan/60
                        focus:ring-0 focus:outline-none transition-all duration-300
                        disabled:opacity-50 disabled:cursor-not-allowed"
           />
           <button
             type="submit"
             disabled={status === 'loading' || status === 'success' || !email}
-            className="btn-glow px-6 py-3.5 rounded-lg bg-chuyan-purple/80 border border-chuyan-violet/40
+            className="btn-glow px-6 py-3.5 rounded-lg bg-chuyan-teal/80 border border-chuyan-cyan/40
                        text-zinc-100 font-medium tracking-wide uppercase text-sm
-                       hover:bg-chuyan-purple hover:border-chuyan-glow/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]
+                       hover:bg-chuyan-teal hover:border-chuyan-glow/50 hover:shadow-[0_0_20px_rgba(0,229,255,0.3)]
                        disabled:opacity-50 disabled:cursor-not-allowed
                        transition-all duration-300"
           >

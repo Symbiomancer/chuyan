@@ -113,3 +113,12 @@
 - Flame tongues use teardrop bezier paths with radial gradients (yellow core → orange → red tips)
 - New flameFlicker keyframe: scaleY/scaleX variation + rotation wobble for dancing fire effect
 - Applied to both homepage and Maelstrom backgrounds
+
+### 02:45 - New logo, cyan color scheme, removed flame effects
+- New pixel-art neon flame logo (logo-chuyan.png) with "CHUYAN AI" text baked in
+- Removed separate CHUYAN h1 heading — logo handles branding
+- Complete color scheme overhaul: purple → cyan/teal matching new logo
+- Tailwind palette: added cyan (#22d3ee), teal (#06b6d4), aqua (#00e5ff), magenta (#d946ef)
+- Recolored all network backgrounds, UI elements, gradients, glows across all pages
+- Removed all flame/ember/spark animations — clean cyan network only
+- Removed unused CSS keyframes (netEmber, sparkErupt, flameFlicker, flameSpread, emberGlow)

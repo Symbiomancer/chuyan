@@ -8,7 +8,7 @@ export default function MaelstromBackground() {
     return x - Math.floor(x)
   }
 
-  const { nodes, connections, emberGroups } = useMemo(() => {
+  const { nodes, connections } = useMemo(() => {
     const nodeList = Array.from({ length: 150 }, (_, i) => {
       const x = seededRandom(i + 1) * 100
       const y = seededRandom(i + 50) * 100
@@ -50,25 +50,7 @@ export default function MaelstromBackground() {
       }
     }
 
-    // Assign ~40% of connections to ember groups (6 groups with staggered delays)
-    const numGroups = 6
-    const emberGroupList: { connections: typeof connectionList; nodeIds: Set<number>; delay: number }[] = []
-
-    for (let g = 0; g < numGroups; g++) {
-      const groupConns = connectionList.filter((_, ci) => {
-        const v = seededRandom(ci + g * 1000 + 555)
-        return v > 0.7 && Math.floor(seededRandom(ci + 800) * numGroups) === g
-      })
-      const nodeIds = new Set<number>()
-      groupConns.forEach(c => { nodeIds.add(c.from.id); nodeIds.add(c.to.id) })
-      emberGroupList.push({
-        connections: groupConns,
-        nodeIds,
-        delay: g * 2,
-      })
-    }
-
-    return { nodes: nodeList, connections: connectionList, emberGroups: emberGroupList }
+    return { nodes: nodeList, connections: connectionList }
   }, [])
 
   return (
@@ -87,11 +69,11 @@ export default function MaelstromBackground() {
               x2="100%"
               y2="0%"
             >
-              <stop offset="0%" stopColor="rgba(139, 92, 246, 0)" />
-              <stop offset="45%" stopColor="rgba(139, 92, 246, 0)" />
-              <stop offset="50%" stopColor="rgba(168, 85, 247, 0.9)" />
-              <stop offset="55%" stopColor="rgba(139, 92, 246, 0)" />
-              <stop offset="100%" stopColor="rgba(139, 92, 246, 0)" />
+              <stop offset="0%" stopColor="rgba(6, 182, 212, 0)" />
+              <stop offset="45%" stopColor="rgba(6, 182, 212, 0)" />
+              <stop offset="50%" stopColor="rgba(34, 211, 238, 0.9)" />
+              <stop offset="55%" stopColor="rgba(6, 182, 212, 0)" />
+              <stop offset="100%" stopColor="rgba(6, 182, 212, 0)" />
             </linearGradient>
           ))}
         </defs>
@@ -104,7 +86,7 @@ export default function MaelstromBackground() {
             y1={`${conn.from.y}%`}
             x2={`${conn.to.x}%`}
             y2={`${conn.to.y}%`}
-            stroke="rgba(139, 92, 246, 0.25)"
+            stroke="rgba(6, 182, 212, 0.25)"
             strokeWidth="1"
           />
         ))}
@@ -126,23 +108,6 @@ export default function MaelstromBackground() {
             }}
           />
         ))}
-
-        {/* Ember overlays on connections — orange/red color cycle */}
-        {emberGroups.map((group, gi) =>
-          group.connections.map((conn, ci) => (
-            <line
-              key={`ember-line-${gi}-${ci}`}
-              x1={`${conn.from.x}%`}
-              y1={`${conn.from.y}%`}
-              x2={`${conn.to.x}%`}
-              y2={`${conn.to.y}%`}
-              stroke="rgba(255, 110, 30, 0.7)"
-              strokeWidth="1.5"
-              className="animate-net-ember"
-              style={{ animationDelay: `${group.delay}s` }}
-            />
-          ))
-        )}
       </svg>
 
       {/* Nodes */}
@@ -155,34 +120,13 @@ export default function MaelstromBackground() {
             top: `${node.y}%`,
             width: `${node.size}px`,
             height: `${node.size}px`,
-            backgroundColor: 'rgba(168, 85, 247, 0.8)',
-            boxShadow: `0 0 ${node.size * 3}px rgba(168, 85, 247, 0.5)`,
+            backgroundColor: 'rgba(34, 211, 238, 0.8)',
+            boxShadow: `0 0 ${node.size * 3}px rgba(0, 229, 255, 0.5)`,
             animationDelay: `${node.delay}s`,
             animationDuration: `${node.duration}s`,
           }}
         />
       ))}
-
-      {/* Ember overlays on nodes — orange/red color cycle */}
-      {emberGroups.map((group, gi) =>
-        nodes.filter(n => group.nodeIds.has(n.id)).map((node) => (
-          <div
-            key={`ember-node-${gi}-${node.id}`}
-            className="absolute rounded-full animate-net-ember"
-            style={{
-              left: `${node.x}%`,
-              top: `${node.y}%`,
-              width: `${node.size + 2}px`,
-              height: `${node.size + 2}px`,
-              marginLeft: '-1px',
-              marginTop: '-1px',
-              backgroundColor: 'rgba(255, 120, 30, 0.9)',
-              boxShadow: `0 0 ${node.size * 3}px rgba(255, 80, 20, 0.6)`,
-              animationDelay: `${group.delay}s`,
-            }}
-          />
-        ))
-      )}
     </div>
   )
 }

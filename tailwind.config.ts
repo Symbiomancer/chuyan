@@ -11,14 +11,18 @@ const config: Config = {
       colors: {
         chuyan: {
           black: '#0a0a0a',
-          navy: '#0f172a',
+          navy: '#0a1628',
           gunmetal: '#2a2d30',
           steel: '#4a4a4a',
-          silver: '#6b7280',
-          highlight: '#a1a1aa',
-          purple: '#a855f7',
+          silver: '#94a3b8',
+          highlight: '#cffafe',
+          cyan: '#22d3ee',
+          teal: '#06b6d4',
+          aqua: '#00e5ff',
+          purple: '#7c3aed',
           violet: '#8b5cf6',
-          glow: '#c084fc',
+          magenta: '#d946ef',
+          glow: '#67e8f9',
         },
       },
       fontFamily: {
