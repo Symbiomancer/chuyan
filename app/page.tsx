@@ -13,33 +13,6 @@ export default function Home() {
 
       {/* Content */}
       <div className="relative z-10 text-center max-w-3xl mx-auto">
-        {/* Hanzi 初焰 */}
-        <div className="animate-fade-in flex justify-center gap-3 mb-4" aria-hidden="true">
-          <span
-            className="animate-hanzi-appear"
-            style={{
-              fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-              fontFamily: 'var(--font-noto-serif-sc), "SimSun", "STSong", serif',
-              fontWeight: 900,
-              lineHeight: 1,
-            }}
-          >
-            初
-          </span>
-          <span
-            className="animate-hanzi-appear"
-            style={{
-              fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-              fontFamily: 'var(--font-noto-serif-sc), "SimSun", "STSong", serif',
-              fontWeight: 900,
-              lineHeight: 1,
-              animationDelay: '2s',
-            }}
-          >
-            焰
-          </span>
-        </div>
-
         {/* Logo (includes CHUYAN AI text) */}
         <div className="animate-fade-in-delay-1 mb-8">
           <div className="relative w-48 h-48 sm:w-60 sm:h-60 mx-auto">

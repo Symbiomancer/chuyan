@@ -121,6 +121,35 @@ export default function AnimatedBackground() {
         ))}
       </svg>
 
+      {/* 初焰 Hanzi — large background characters */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
+        <span
+          className="animate-hanzi-singe"
+          style={{
+            fontSize: '28vw',
+            fontFamily: 'var(--font-noto-serif-sc), "SimSun", "STSong", serif',
+            fontWeight: 900,
+            lineHeight: 1,
+            marginRight: '3vw',
+          }}
+        >
+          初
+        </span>
+        <span
+          className="animate-hanzi-singe"
+          style={{
+            fontSize: '28vw',
+            fontFamily: 'var(--font-noto-serif-sc), "SimSun", "STSong", serif',
+            fontWeight: 900,
+            lineHeight: 1,
+            marginLeft: '3vw',
+            animationDelay: '2s',
+          }}
+        >
+          焰
+        </span>
+      </div>
+
       {/* Stars */}
       {stars.map((star) => (
         <div
