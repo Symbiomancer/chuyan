@@ -262,127 +262,29 @@ input[type="email"]::placeholder {
   opacity: 0;
 }
 
-/* === Flame spark eruption animations === */
+/* === Network ember color cycle === */
 
-/* Spark origin: erupts bright red/orange then fades */
-@keyframes sparkErupt {
+/* Network elements briefly shift purple → orange/red → purple */
+@keyframes netEmber {
   0%, 100% {
     opacity: 0;
-    transform: scale(0.5);
-  }
-  5% {
-    opacity: 1;
-    transform: scale(2.5);
   }
   15% {
-    opacity: 0.8;
-    transform: scale(1.8);
-  }
-  35% {
-    opacity: 0.3;
-    transform: scale(1.2);
-  }
-  50% {
     opacity: 0;
-    transform: scale(0.5);
-  }
-}
-
-.animate-spark-erupt {
-  animation: sparkErupt 8s ease-out infinite;
-  opacity: 0;
-}
-
-/* Organic flame tongue flicker */
-@keyframes flameFlicker {
-  0%, 100% {
-    opacity: 0;
-    transform: scaleY(0.3) scaleX(0.8) rotate(0deg);
-  }
-  5% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.9;
-    transform: scaleY(1.1) scaleX(1) rotate(-3deg);
-  }
-  18% {
-    opacity: 0.7;
-    transform: scaleY(0.85) scaleX(1.1) rotate(4deg);
   }
   25% {
     opacity: 1;
-    transform: scaleY(1.3) scaleX(0.9) rotate(-2deg);
-  }
-  33% {
-    opacity: 0.6;
-    transform: scaleY(0.9) scaleX(1.05) rotate(5deg);
   }
   40% {
-    opacity: 0.4;
-    transform: scaleY(0.7) scaleX(0.85) rotate(-1deg);
-  }
-  50% {
-    opacity: 0;
-    transform: scaleY(0.3) scaleX(0.8) rotate(0deg);
-  }
-}
-
-.animate-flame-flicker {
-  animation: flameFlicker 8s ease-in-out infinite;
-  transform-origin: bottom center;
-  opacity: 0;
-}
-
-/* Flame spread along connections */
-@keyframes flameSpread {
-  0%, 100% {
-    opacity: 0;
-  }
-  8% {
-    opacity: 0;
-  }
-  15% {
-    opacity: 0.9;
-  }
-  30% {
-    opacity: 0.5;
-  }
-  45% {
-    opacity: 0;
-  }
-}
-
-.animate-flame-spread {
-  animation: flameSpread 8s ease-out infinite;
-  opacity: 0;
-}
-
-/* Neighbor ember glow */
-@keyframes emberGlow {
-  0%, 100% {
-    opacity: 0;
-    transform: scale(1);
-  }
-  12% {
-    opacity: 0;
-  }
-  20% {
     opacity: 1;
-    transform: scale(1.8);
   }
-  35% {
-    opacity: 0.4;
-    transform: scale(1.3);
-  }
-  50% {
+  55% {
     opacity: 0;
-    transform: scale(1);
   }
 }
 
-.animate-ember-glow {
-  animation: emberGlow 8s ease-out infinite;
+.animate-net-ember {
+  animation: netEmber 12s ease-in-out infinite;
   opacity: 0;
 }
 

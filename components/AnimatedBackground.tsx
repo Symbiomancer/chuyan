@@ -8,7 +8,7 @@ export default function AnimatedBackground() {
     return x - Math.floor(x)
   }
 
-  const { stars, connections, sparkOrigins } = useMemo(() => {
+  const { stars, connections, emberGroups } = useMemo(() => {
     // Generate stars avoiding center
     const starList = Array.from({ length: 100 }, (_, i) => {
       let x = seededRandom(i + 1) * 100
@@ -33,10 +33,9 @@ export default function AnimatedBackground() {
     })
 
     // Create connections between nearby stars
-    const connectionList: { from: typeof starList[0]; to: typeof starList[0]; delay: number; duration: number }[] = []
-    const maxDistance = 20 // Max distance (in %) to connect
+    const connectionList: { from: typeof starList[0]; to: typeof starList[0]; delay: number; duration: number; id: number }[] = []
+    const maxDistance = 20
     const maxConnectionsPerStar = 2
-
     const connectionCount: Record<number, number> = {}
 
     for (let i = 0; i < starList.length; i++) {
@@ -57,6 +56,7 @@ export default function AnimatedBackground() {
             to: starList[j],
             delay: seededRandom(i + j + 500) * 8,
             duration: 3 + seededRandom(i + j + 600) * 4,
+            id: connectionList.length,
           })
           connectionCount[i]++
           connectionCount[j]++
@@ -64,34 +64,25 @@ export default function AnimatedBackground() {
       }
     }
 
-    // Select spark origin stars for flame eruptions
-    const sparkOrigins: {
-      node: typeof starList[0]
-      connectedEdges: typeof connectionList
-      neighborNodes: typeof starList
-      cycleDelay: number
-    }[] = []
+    // Assign ~40% of connections to ember groups (6 groups with staggered delays)
+    const numGroups = 6
+    const emberGroupList: { connections: typeof connectionList; nodeIds: Set<number>; delay: number }[] = []
 
-    const sparkCandidates = starList.filter((_, i) => seededRandom(i + 900) > 0.92)
-    const sparks = sparkCandidates.slice(0, 8)
-
-    for (const sparkNode of sparks) {
-      const connEdges = connectionList.filter(
-        c => c.from.id === sparkNode.id || c.to.id === sparkNode.id
-      )
-      const neighborIds = new Set(
-        connEdges.map(c => c.from.id === sparkNode.id ? c.to.id : c.from.id)
-      )
-      const neighbors = starList.filter(n => neighborIds.has(n.id))
-      sparkOrigins.push({
-        node: sparkNode,
-        connectedEdges: connEdges,
-        neighborNodes: neighbors,
-        cycleDelay: seededRandom(sparkNode.id + 700) * 6,
+    for (let g = 0; g < numGroups; g++) {
+      const groupConns = connectionList.filter((_, ci) => {
+        const v = seededRandom(ci + g * 1000 + 555)
+        return v > 0.7 && Math.floor(seededRandom(ci + 800) * numGroups) === g
+      })
+      const nodeIds = new Set<number>()
+      groupConns.forEach(c => { nodeIds.add(c.from.id); nodeIds.add(c.to.id) })
+      emberGroupList.push({
+        connections: groupConns,
+        nodeIds,
+        delay: g * 2,
       })
     }
 
-    return { stars: starList, connections: connectionList, sparkOrigins }
+    return { stars: starList, connections: connectionList, emberGroups: emberGroupList }
   }, [])
 
   return (
@@ -147,6 +138,23 @@ export default function AnimatedBackground() {
             }}
           />
         ))}
+
+        {/* Ember overlays on connections — orange/red color cycle */}
+        {emberGroups.map((group, gi) =>
+          group.connections.map((conn, ci) => (
+            <line
+              key={`ember-line-${gi}-${ci}`}
+              x1={`${conn.from.x}%`}
+              y1={`${conn.from.y}%`}
+              x2={`${conn.to.x}%`}
+              y2={`${conn.to.y}%`}
+              stroke="rgba(255, 110, 30, 0.7)"
+              strokeWidth="1.5"
+              className="animate-net-ember"
+              style={{ animationDelay: `${group.delay}s` }}
+            />
+          ))
+        )}
       </svg>
 
       {/* Stars */}
@@ -167,88 +175,22 @@ export default function AnimatedBackground() {
         />
       ))}
 
-      {/* Flame spark eruptions */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none">
-        {sparkOrigins.map((spark, si) =>
-          spark.connectedEdges.map((conn, ci) => (
-            <line
-              key={`flame-edge-${si}-${ci}`}
-              x1={`${conn.from.x}%`}
-              y1={`${conn.from.y}%`}
-              x2={`${conn.to.x}%`}
-              y2={`${conn.to.y}%`}
-              stroke="rgba(255, 120, 30, 0.8)"
-              strokeWidth="2.5"
-              className="animate-flame-spread"
-              style={{
-                animationDelay: `${spark.cycleDelay}s`,
-                filter: 'drop-shadow(0 0 4px rgba(255, 80, 20, 0.6))',
-              }}
-            />
-          ))
-        )}
-      </svg>
-
-      {/* Organic flame tongues at spark origins */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none">
-        <defs>
-          <radialGradient id="flame-grad-1" cx="50%" cy="80%" r="60%">
-            <stop offset="0%" stopColor="#fffbe0" />
-            <stop offset="30%" stopColor="#ffaa20" />
-            <stop offset="70%" stopColor="#ff4400" />
-            <stop offset="100%" stopColor="#aa1100" stopOpacity="0" />
-          </radialGradient>
-          <radialGradient id="flame-grad-2" cx="50%" cy="70%" r="65%">
-            <stop offset="0%" stopColor="#fff4c0" />
-            <stop offset="25%" stopColor="#ff8800" />
-            <stop offset="65%" stopColor="#ee3300" />
-            <stop offset="100%" stopColor="#880800" stopOpacity="0" />
-          </radialGradient>
-          <filter id="flame-blur">
-            <feGaussianBlur stdDeviation="1.2" />
-          </filter>
-        </defs>
-        {sparkOrigins.map((spark, si) => {
-          const cx = spark.node.x
-          const cy = spark.node.y
-          const flames = [
-            { dx: 0, dy: -0.8, rot: -5, scale: 1, delay: 0 },
-            { dx: -0.3, dy: -0.5, rot: -15, scale: 0.7, delay: 0.3 },
-            { dx: 0.3, dy: -0.6, rot: 12, scale: 0.8, delay: 0.15 },
-          ]
-          return flames.map((f, fi) => (
-            <path
-              key={`flame-${si}-${fi}`}
-              d="M 0,0 C -3,-4 -4,-10 -2,-16 C -1,-19 1,-19 2,-16 C 4,-10 3,-4 0,0 Z"
-              fill={fi === 0 ? 'url(#flame-grad-1)' : 'url(#flame-grad-2)'}
-              filter="url(#flame-blur)"
-              className="animate-flame-flicker"
-              style={{
-                transformOrigin: `${cx}% ${cy}%`,
-                transform: `translate(${cx}%, ${cy}%) translate(${f.dx}%, ${f.dy}%) scale(${f.scale}) rotate(${f.rot}deg)`,
-                animationDelay: `${spark.cycleDelay + f.delay}s`,
-              }}
-            />
-          ))
-        })}
-      </svg>
-
-      {/* Ember glow on neighbor nodes */}
-      {sparkOrigins.map((spark, si) =>
-        spark.neighborNodes.map((neighbor, ni) => (
+      {/* Ember overlays on nodes — orange/red color cycle */}
+      {emberGroups.map((group, gi) =>
+        stars.filter(s => group.nodeIds.has(s.id)).map((star) => (
           <div
-            key={`ember-${si}-${ni}`}
-            className="absolute rounded-full animate-ember-glow"
+            key={`ember-node-${gi}-${star.id}`}
+            className="absolute rounded-full animate-net-ember"
             style={{
-              left: `${neighbor.x}%`,
-              top: `${neighbor.y}%`,
-              width: '6px',
-              height: '6px',
-              marginLeft: '-3px',
-              marginTop: '-3px',
-              backgroundColor: 'rgba(255, 100, 20, 0.9)',
-              boxShadow: '0 0 12px rgba(255, 60, 10, 0.6)',
-              animationDelay: `${spark.cycleDelay}s`,
+              left: `${star.x}%`,
+              top: `${star.y}%`,
+              width: `${star.size + 2}px`,
+              height: `${star.size + 2}px`,
+              marginLeft: '-1px',
+              marginTop: '-1px',
+              backgroundColor: 'rgba(255, 120, 30, 0.9)',
+              boxShadow: `0 0 ${star.size * 3}px rgba(255, 80, 20, 0.6)`,
+              animationDelay: `${group.delay}s`,
             }}
           />
         ))
