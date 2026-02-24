@@ -14,7 +14,7 @@ export default function Home() {
       {/* Content */}
       <div className="relative z-10 text-center max-w-3xl mx-auto">
         {/* Logo */}
-        <div className="animate-fade-in mb-8">
+        <div className="animate-fade-in mb-3">
           <div className="relative w-32 h-32 sm:w-40 sm:h-40 mx-auto">
             <Image
               src="/logo-new.png"
@@ -29,7 +29,7 @@ export default function Home() {
         {/* Hanzi 初焰 */}
         <div className="animate-fade-in-delay-1 flex justify-center gap-3 mb-2" aria-hidden="true">
           <span
-            className="animate-hanzi-ignite"
+            className="animate-hanzi-appear"
             style={{
               fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
               fontFamily: 'var(--font-noto-serif-sc), "SimSun", "STSong", serif',
@@ -40,7 +40,7 @@ export default function Home() {
             初
           </span>
           <span
-            className="animate-hanzi-ignite"
+            className="animate-hanzi-appear"
             style={{
               fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
               fontFamily: 'var(--font-noto-serif-sc), "SimSun", "STSong", serif',
