@@ -149,35 +149,6 @@ export default function AnimatedBackground() {
         ))}
       </svg>
 
-      {/* 初焰 Hanzi — fire ignition */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
-        <span
-          className="animate-hanzi-ignite"
-          style={{
-            fontSize: '25vw',
-            fontFamily: 'var(--font-noto-serif-sc), "SimSun", "STSong", serif',
-            fontWeight: 900,
-            lineHeight: 1,
-            marginRight: '2vw',
-          }}
-        >
-          初
-        </span>
-        <span
-          className="animate-hanzi-ignite"
-          style={{
-            fontSize: '25vw',
-            fontFamily: 'var(--font-noto-serif-sc), "SimSun", "STSong", serif',
-            fontWeight: 900,
-            lineHeight: 1,
-            marginLeft: '2vw',
-            animationDelay: '2s',
-          }}
-        >
-          焰
-        </span>
-      </div>
-
       {/* Stars */}
       {stars.map((star) => (
         <div
@@ -218,24 +189,49 @@ export default function AnimatedBackground() {
         )}
       </svg>
 
-      {/* Spark origin bursts */}
-      {sparkOrigins.map((spark, si) => (
-        <div
-          key={`spark-origin-${si}`}
-          className="absolute rounded-full animate-spark-erupt"
-          style={{
-            left: `${spark.node.x}%`,
-            top: `${spark.node.y}%`,
-            width: '8px',
-            height: '8px',
-            marginLeft: '-4px',
-            marginTop: '-4px',
-            backgroundColor: 'rgba(255, 140, 30, 0.95)',
-            boxShadow: '0 0 20px rgba(255, 80, 20, 0.8), 0 0 40px rgba(255, 50, 10, 0.4)',
-            animationDelay: `${spark.cycleDelay}s`,
-          }}
-        />
-      ))}
+      {/* Organic flame tongues at spark origins */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none">
+        <defs>
+          <radialGradient id="flame-grad-1" cx="50%" cy="80%" r="60%">
+            <stop offset="0%" stopColor="#fffbe0" />
+            <stop offset="30%" stopColor="#ffaa20" />
+            <stop offset="70%" stopColor="#ff4400" />
+            <stop offset="100%" stopColor="#aa1100" stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id="flame-grad-2" cx="50%" cy="70%" r="65%">
+            <stop offset="0%" stopColor="#fff4c0" />
+            <stop offset="25%" stopColor="#ff8800" />
+            <stop offset="65%" stopColor="#ee3300" />
+            <stop offset="100%" stopColor="#880800" stopOpacity="0" />
+          </radialGradient>
+          <filter id="flame-blur">
+            <feGaussianBlur stdDeviation="1.2" />
+          </filter>
+        </defs>
+        {sparkOrigins.map((spark, si) => {
+          const cx = spark.node.x
+          const cy = spark.node.y
+          const flames = [
+            { dx: 0, dy: -0.8, rot: -5, scale: 1, delay: 0 },
+            { dx: -0.3, dy: -0.5, rot: -15, scale: 0.7, delay: 0.3 },
+            { dx: 0.3, dy: -0.6, rot: 12, scale: 0.8, delay: 0.15 },
+          ]
+          return flames.map((f, fi) => (
+            <path
+              key={`flame-${si}-${fi}`}
+              d="M 0,0 C -3,-4 -4,-10 -2,-16 C -1,-19 1,-19 2,-16 C 4,-10 3,-4 0,0 Z"
+              fill={fi === 0 ? 'url(#flame-grad-1)' : 'url(#flame-grad-2)'}
+              filter="url(#flame-blur)"
+              className="animate-flame-flicker"
+              style={{
+                transformOrigin: `${cx}% ${cy}%`,
+                transform: `translate(${cx}%, ${cy}%) translate(${f.dx}%, ${f.dy}%) scale(${f.scale}) rotate(${f.rot}deg)`,
+                animationDelay: `${spark.cycleDelay + f.delay}s`,
+              }}
+            />
+          ))
+        })}
+      </svg>
 
       {/* Ember glow on neighbor nodes */}
       {sparkOrigins.map((spark, si) =>

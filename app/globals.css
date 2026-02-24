@@ -293,6 +293,47 @@ input[type="email"]::placeholder {
   opacity: 0;
 }
 
+/* Organic flame tongue flicker */
+@keyframes flameFlicker {
+  0%, 100% {
+    opacity: 0;
+    transform: scaleY(0.3) scaleX(0.8) rotate(0deg);
+  }
+  5% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+    transform: scaleY(1.1) scaleX(1) rotate(-3deg);
+  }
+  18% {
+    opacity: 0.7;
+    transform: scaleY(0.85) scaleX(1.1) rotate(4deg);
+  }
+  25% {
+    opacity: 1;
+    transform: scaleY(1.3) scaleX(0.9) rotate(-2deg);
+  }
+  33% {
+    opacity: 0.6;
+    transform: scaleY(0.9) scaleX(1.05) rotate(5deg);
+  }
+  40% {
+    opacity: 0.4;
+    transform: scaleY(0.7) scaleX(0.85) rotate(-1deg);
+  }
+  50% {
+    opacity: 0;
+    transform: scaleY(0.3) scaleX(0.8) rotate(0deg);
+  }
+}
+
+.animate-flame-flicker {
+  animation: flameFlicker 8s ease-in-out infinite;
+  transform-origin: bottom center;
+  opacity: 0;
+}
+
 /* Flame spread along connections */
 @keyframes flameSpread {
   0%, 100% {

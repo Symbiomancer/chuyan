@@ -106,3 +106,10 @@
 - 初 fires first, 焰 follows 2s later, on a 14s repeating cycle
 - Animation: invisible → ember glow → bright orange/red blaze → fade to embers → invisible
 - Added Noto Serif SC (weight 900) via next/font/google for proper CJK rendering
+
+### 02:25 - Repositioned hanzi + organic flame animations
+- Moved 初焰 from giant background watermark to tasteful position above CHUYAN heading
+- Replaced geometric spark circles with organic SVG flame tongues (3 per spark origin)
+- Flame tongues use teardrop bezier paths with radial gradients (yellow core → orange → red tips)
+- New flameFlicker keyframe: scaleY/scaleX variation + rotation wobble for dancing fire effect
+- Applied to both homepage and Maelstrom backgrounds

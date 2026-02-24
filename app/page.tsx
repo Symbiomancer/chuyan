@@ -26,6 +26,33 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Hanzi 初焰 */}
+        <div className="animate-fade-in-delay-1 flex justify-center gap-3 mb-2" aria-hidden="true">
+          <span
+            className="animate-hanzi-ignite"
+            style={{
+              fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+              fontFamily: 'var(--font-noto-serif-sc), "SimSun", "STSong", serif',
+              fontWeight: 900,
+              lineHeight: 1,
+            }}
+          >
+            初
+          </span>
+          <span
+            className="animate-hanzi-ignite"
+            style={{
+              fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+              fontFamily: 'var(--font-noto-serif-sc), "SimSun", "STSong", serif',
+              fontWeight: 900,
+              lineHeight: 1,
+              animationDelay: '2s',
+            }}
+          >
+            焰
+          </span>
+        </div>
+
         {/* Company name */}
         <h1 className="animate-fade-in-delay-1 font-display text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-6">
           <span className="bg-gradient-to-r from-zinc-100 via-zinc-300 to-zinc-400 bg-clip-text text-transparent">
