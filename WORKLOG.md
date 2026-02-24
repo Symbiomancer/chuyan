@@ -94,3 +94,15 @@
 - Updated: tailwind.config.ts, package.json, package-lock.json, wrangler.toml, app/page.tsx, app/layout.tsx, app/maelstrom/layout.tsx, app/maelstrom/page.tsx, components/EmailSignup.tsx, WORKLOG.md, features/website-launch.md, features/maelstrom-page.md
 - Tailwind color palette prefix changed from galdria-* to chuyan-*
 - All metadata, SEO tags, and domain references updated
+
+### 02:00 - Added flame spark eruptions to Maelstrom background
+- ~10 random "spark origin" nodes periodically erupt with red/orange fire bursts
+- Connected edges flash with flame-colored spread, neighbor nodes glow ember-red
+- 3 new CSS keyframes: sparkErupt, flameSpread, emberGlow (all 8s cycle, staggered delays)
+- Pure CSS animation, no runtime JS loop — matches existing architecture
+
+### 02:10 - Added 初焰 hanzi fire ignition to homepage background
+- Large centered 初焰 characters ignite one by one behind homepage content
+- 初 fires first, 焰 follows 2s later, on a 14s repeating cycle
+- Animation: invisible → ember glow → bright orange/red blaze → fade to embers → invisible
+- Added Noto Serif SC (weight 900) via next/font/google for proper CJK rendering

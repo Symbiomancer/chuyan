@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
+import { Inter, Space_Grotesk, Noto_Serif_SC } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
@@ -10,6 +10,13 @@ const inter = Inter({
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   variable: '--font-space-grotesk',
+})
+
+const notoSerifSC = Noto_Serif_SC({
+  weight: '900',
+  subsets: ['latin'],
+  variable: '--font-noto-serif-sc',
+  preload: false,
 })
 
 export const metadata: Metadata = {
@@ -38,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${notoSerifSC.variable}`}>
       <body className="text-zinc-200 font-sans">
         {children}
       </body>
