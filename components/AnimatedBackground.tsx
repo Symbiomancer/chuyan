@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
+import Image from 'next/image'
 
 export default function AnimatedBackground() {
   const seededRandom = (seed: number) => {
@@ -121,33 +122,17 @@ export default function AnimatedBackground() {
         ))}
       </svg>
 
-      {/* 初焰 Hanzi — large background characters */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
-        <span
-          className="animate-hanzi-singe"
-          style={{
-            fontSize: '28vw',
-            fontFamily: 'var(--font-noto-serif-sc), "SimSun", "STSong", serif',
-            fontWeight: 900,
-            lineHeight: 1,
-            marginRight: '3vw',
-          }}
-        >
-          初
-        </span>
-        <span
-          className="animate-hanzi-singe"
-          style={{
-            fontSize: '28vw',
-            fontFamily: 'var(--font-noto-serif-sc), "SimSun", "STSong", serif',
-            fontWeight: 900,
-            lineHeight: 1,
-            marginLeft: '3vw',
-            animationDelay: '2s',
-          }}
-        >
-          焰
-        </span>
+      {/* 初焰 Hanzi — stylized background image */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none animate-hanzi-supercharge" aria-hidden="true">
+        <div className="relative" style={{ width: '60vw', maxWidth: '700px', aspectRatio: '1' }}>
+          <Image
+            src="/hanzi-chuyan.png"
+            alt=""
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
       </div>
 
       {/* Stars */}
