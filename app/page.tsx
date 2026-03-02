@@ -9,6 +9,7 @@ import AnimatedBackground from '@/components/AnimatedBackground'
 
 const SpaceIntro = dynamic(() => import('@/components/SpaceIntro'), {
   ssr: false,
+  loading: () => <div className="fixed inset-0 z-50 bg-black" />,
 })
 
 export default function Home() {

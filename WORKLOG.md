@@ -142,3 +142,10 @@
 - Skip button appears after 1s, localStorage prevents repeat plays
 - Dynamic import (ssr: false) for static export compatibility
 - Build verified: static export succeeds with no errors
+
+### 14:45 - Removed localStorage gating
+- Intro animation now plays on every page load per user request
+
+### 15:00 - Fixed intro flash bug
+- Added loading placeholder to dynamic SpaceIntro import
+- Black screen shown immediately while Three.js chunk loads, preventing logo flash
