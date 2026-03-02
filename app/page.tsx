@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,25 +11,13 @@ const SpaceIntro = dynamic(() => import('@/components/SpaceIntro'), {
   ssr: false,
 })
 
-const INTRO_STORAGE_KEY = 'chuyan-intro-seen'
-
 export default function Home() {
-  const [showIntro, setShowIntro] = useState(false)
+  const [showIntro, setShowIntro] = useState(true)
   const [introComplete, setIntroComplete] = useState(false)
-
-  useEffect(() => {
-    const seen = localStorage.getItem(INTRO_STORAGE_KEY)
-    if (seen) {
-      setIntroComplete(true)
-    } else {
-      setShowIntro(true)
-    }
-  }, [])
 
   const handleIntroComplete = () => {
     setShowIntro(false)
     setIntroComplete(true)
-    localStorage.setItem(INTRO_STORAGE_KEY, 'true')
   }
 
   return (
