@@ -122,3 +122,23 @@
 - Recolored all network backgrounds, UI elements, gradients, glows across all pages
 - Removed all flame/ember/spark animations — clean cyan network only
 - Removed unused CSS keyframes (netEmber, sparkErupt, flameFlicker, flameSpread, emberGlow)
+
+### 03:00 - Replaced text hanzi with stylized image
+- Swapped div-rendered 初焰 text with hanzi-chuyan.png pixel art image
+- Added hanziSupercharge animation (brightness surge → settle to 12% opacity)
+- Image centered at 60vw, pointer-events disabled as background layer
+
+### 03:15 - Tighter crop on pixel art hanzi
+- Cropped black borders from hanzi-chuyan.png for cleaner presentation
+
+## 2026-03-02
+
+### 14:27 - 3D Hyperspace Intro Animation
+- Created SpaceIntro component suite (6 files) using React Three Fiber
+- 5000 instanced star particles with streak elongation during warp
+- 4 space debris objects (2 asteroids, 2 planets) with cyan/purple palette
+- Hanzi sear-in effect using additive blending in 3D scene
+- 5.5s animation: hyperspace rush → decelerate → hanzi sear → dissolve to page
+- Skip button appears after 1s, localStorage prevents repeat plays
+- Dynamic import (ssr: false) for static export compatibility
+- Build verified: static export succeeds with no errors
